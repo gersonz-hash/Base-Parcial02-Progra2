@@ -38,6 +38,7 @@ public class VentanaEmpleados extends JFrame {
     private JButton btnActualizar;
     private JButton btnEliminar;
     private JButton btnLimpiar;
+    private JButton btnTotal;
 
     private JTable tablaEmpleados;
     private DefaultTableModel modeloTabla;
@@ -165,12 +166,15 @@ public class VentanaEmpleados extends JFrame {
         btnGuardar = new JButton("Guardar");
         btnBuscar = new JButton("Buscar");
         btnActualizar = new JButton("Actualizar");
+        btnTotal = new JButton("Total");
         btnEliminar = new JButton("Eliminar");
         btnLimpiar = new JButton("Limpiar");
+        
 
         panelBotones.add(btnGuardar);
         panelBotones.add(btnBuscar);
         panelBotones.add(btnActualizar);
+        panelBotones.add(btnTotal);
         panelBotones.add(btnEliminar);
         panelBotones.add(btnLimpiar);
 
