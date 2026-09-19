@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JComboBox;
 
 import umg.edu.gt.gestionempleados.dao.EmpleadoDao;
 import umg.edu.gt.gestionempleados.modelo.Empleado;
@@ -30,6 +31,7 @@ public class VentanaEmpleados extends JFrame {
     private JTextField txtDepartamento;
     private JTextField txtSalario;
     private JTextField txtFecha;
+    private JComboBox<String> comboOperacion; 
 
     private JCheckBox chkActivo;
 
@@ -62,6 +64,11 @@ public class VentanaEmpleados extends JFrame {
         crearInterfaz();
         cargarTabla();
     }
+    
+    
+   // public ComboBox {
+    	
+   // }
 
     private void crearInterfaz() {
 
