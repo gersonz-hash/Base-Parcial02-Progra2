@@ -1,0 +1,54 @@
+-- ================ Gestion de Empleados =================--
+
+USE prog2_db;
+
+SELECT DATABASE();
+
+-- Comprobamos las tablas existentes
+SHOW TABLES;
+
+-- Creamos la tabla de empleados
+CREATE TABLE empleados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    departamento VARCHAR(100) NOT NULL,
+    salario DECIMAL(10, 2) NOT NULL,
+    fecha_contratacion DATE NOT NULL,
+    activo BOOLEAN NOT NULL
+);
+
+-- Comprobamos que la tabla empleados exista
+SHOW TABLES;
+
+-- Comprobamos la estructura de la tabla
+DESCRIBE empleados;
+
+-- Registramos empleados de prueba
+INSERT INTO empleados
+(nombre, departamento, salario, fecha_contratacion, activo)
+VALUES
+('Ana Lucía Pérez', 'Sistemas', 8500.00, '2024-03-15', TRUE),
+('Carlos Roberto Mux', 'Ventas', 6200.00, '2023-08-10', TRUE),
+('Diana Sofía Cabrera', 'Contabilidad', 7100.00, '2022-05-20', FALSE);
+
+-- Consultamos los empleados registrados
+SELECT * FROM empleados;
+
+-- Cambiamos el salario a un empleado
+UPDATE empleados
+SET salario = 9000.00
+WHERE id = 1;
+
+-- Eliminamos a un empleado
+DELETE FROM empleados
+WHERE id = 2;
+
+-- Consultamos nuevamente la tabla de empleados
+SELECT * FROM empleados;
+
+-- Comprobamos que la tabla siga visible
+DESCRIBE empleados;
+
+SHOW TABLES;
+
+SELECT DATABASE();

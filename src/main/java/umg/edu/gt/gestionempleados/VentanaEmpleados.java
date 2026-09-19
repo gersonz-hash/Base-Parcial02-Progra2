@@ -166,7 +166,7 @@ public class VentanaEmpleados extends JFrame {
         btnGuardar = new JButton("Guardar");
         btnBuscar = new JButton("Buscar");
         btnActualizar = new JButton("Actualizar");
-        btnTotal = new JButton("Total");
+        btnTotal = new JButton("Ver Totales");
         btnEliminar = new JButton("Eliminar");
         btnLimpiar = new JButton("Limpiar");
         
@@ -177,6 +177,7 @@ public class VentanaEmpleados extends JFrame {
         panelBotones.add(btnTotal);
         panelBotones.add(btnEliminar);
         panelBotones.add(btnLimpiar);
+        
 
         gbc.gridx = 0;
         gbc.gridy = 6;
@@ -229,6 +230,8 @@ public class VentanaEmpleados extends JFrame {
         btnActualizar.addActionListener(
                 e -> actualizarEmpleado()
         );
+        
+        
 
         btnEliminar.addActionListener(
                 e -> eliminarEmpleado()
