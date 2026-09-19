@@ -231,6 +231,9 @@ public class VentanaEmpleados extends JFrame {
                 e -> actualizarEmpleado()
         );
         
+        btnTotal.addActionListener(
+                e -> calcularTotal()
+        );
         
 
         btnEliminar.addActionListener(
@@ -465,6 +468,61 @@ public class VentanaEmpleados extends JFrame {
                     "Error al actualizar empleado:\n"
                     + e.getMessage()
             );
+        }
+    }
+    
+ // Implementar funcionalidad de boton para calcular la suma y promedio
+    private void calcularTotal() {
+
+        try {
+        	
+            //declaro variables 
+            double suma = 0;
+            int cantidad = 0;
+            
+            //utilizo un for-ech para recorrer los elementos que tengo en la lista
+            for (Empleado empleado : empleadoDao.listar()) {
+            	
+                suma += empleado.getSalario();
+                cantidad++;
+
+            }
+            
+            //si la cantidad es diferente de 0 devuelve lo que está en la instuccion
+            if (cantidad == 0) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "No hay empleados registrados."
+                );
+
+                return;
+            }
+            
+            //para sacar el promedio divido la suma con cantidad
+            double promedio = suma / cantidad;
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    String.format(
+                    		
+                    		//le agregamos formato a la salida que queremos 
+                            "Total de salarios: Q%.2f\nPromedio de salarios: Q%.2f",
+                            suma,
+                            promedio
+                    ),
+                    "Totales",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error al calcular los totales:\n"
+                    + e.getMessage()
+            );
+
         }
     }
 
