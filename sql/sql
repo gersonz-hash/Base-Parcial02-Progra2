@@ -1,54 +1,124 @@
--- ================ Gestion de Empleados =================--
+-- Mostrar las bases de datos que existen
+SHOW DATABASES;
 
+-- Crear la base de datos si todavía no existe
+CREATE DATABASE IF NOT EXISTS prog2_db;
+
+-- Seleccionar la base de datos
 USE prog2_db;
 
+-- Comprobar qué base de datos estamos usando
 SELECT DATABASE();
 
--- Comprobamos las tablas existentes
-SHOW TABLES;
+-- Crear la tabla productos
+CREATE TABLE IF NOT EXISTS productos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    categoria VARCHAR(50) NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
+    stock INT NOT NULL
+);
 
--- Creamos la tabla de empleados
-CREATE TABLE empleados (
+-- Ver la estructura de la tabla
+DESCRIBE productos;
+
+-- Insertar productos de prueba
+INSERT INTO productos (nombre, categoria, precio, stock) VALUES
+('Mouse inalambrico', 'Perifericos', 89.99, 25),
+('Teclado mecanico', 'Perifericos', 249.50, 10),
+('Monitor 24 pulgadas', 'Pantallas', 899.00, 5);
+
+-- Mostrar todos los productos
+SELECT * FROM productos;
+
+-- Insertar otro producto
+INSERT INTO productos (nombre, categoria, precio, stock)
+VALUES ('Audifonos', 'Audio', 150.00, 10);
+
+-- Consultar los productos
+SELECT * FROM productos;
+
+-- Buscar un producto por su id
+SELECT * FROM productos
+WHERE id = 4;
+
+-- Actualizar los datos de un producto
+UPDATE productos
+SET nombre = 'Audifonos Bluetooth',
+    categoria = 'Audio',
+    precio = 175.00,
+    stock = 15
+WHERE id = 4;
+
+-- Ver el producto después de actualizarlo
+SELECT * FROM productos
+WHERE id = 4;
+
+-- Eliminar un producto
+DELETE FROM productos
+WHERE id = 4;
+
+-- Comprobar que el producto fue eliminado
+SELECT * FROM productos;
+
+-- Seleccionar nuevamente la base de datos
+USE prog2_db;
+
+-- Comprobar la base de datos actual
+SELECT DATABASE();
+
+-- Crear la tabla empleados
+CREATE TABLE IF NOT EXISTS empleados (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     departamento VARCHAR(100) NOT NULL,
-    salario DECIMAL(10, 2) NOT NULL,
+    salario DECIMAL(10,2) NOT NULL,
     fecha_contratacion DATE NOT NULL,
-    activo BOOLEAN NOT NULL
+    activo BOOLEAN NOT NULL,
+    tipo_contrato VARCHAR(20) NOT NULL DEFAULT 'Temporal'
 );
 
--- Comprobamos que la tabla empleados exista
-SHOW TABLES;
-
--- Comprobamos la estructura de la tabla
+-- Ver la estructura de la tabla empleados
 DESCRIBE empleados;
 
--- Registramos empleados de prueba
+-- Insertar empleados de prueba
 INSERT INTO empleados
-(nombre, departamento, salario, fecha_contratacion, activo)
+(nombre, departamento, salario, fecha_contratacion, activo, tipo_contrato)
 VALUES
-('Ana Lucía Pérez', 'Sistemas', 8500.00, '2024-03-15', TRUE),
-('Carlos Roberto Mux', 'Ventas', 6200.00, '2023-08-10', TRUE),
-('Diana Sofía Cabrera', 'Contabilidad', 7100.00, '2022-05-20', FALSE);
+('Ana Lucía Pérez', 'Sistemas', 8500.00, '2024-03-15', TRUE, 'Permanente'),
+('Carlos Roberto Mux', 'Ventas', 6200.00, '2023-08-10', TRUE, 'Temporal'),
+('Diana Sofía Cabrera', 'Contabilidad', 7100.00, '2022-05-20', FALSE, 'Por ahora');
 
--- Consultamos los empleados registrados
+-- Mostrar todos los empleados
 SELECT * FROM empleados;
 
--- Cambiamos el salario a un empleado
+-- Buscar un empleado por su id
+SELECT * FROM empleados
+WHERE id = 1;
+
+-- Actualizar el salario de un empleado
 UPDATE empleados
 SET salario = 9000.00
 WHERE id = 1;
 
--- Eliminamos a un empleado
-DELETE FROM empleados
-WHERE id = 2;
+-- Mostrar el empleado actualizado
+SELECT * FROM empleados
+WHERE id = 1;
 
--- Consultamos nuevamente la tabla de empleados
-SELECT * FROM empleados;
+-- Mostrar el nombre y tipo de contrato
+SELECT id, nombre, tipo_contrato
+FROM empleados;
 
--- Comprobamos que la tabla siga visible
-DESCRIBE empleados;
+-- Mostrar todos los datos de los empleados
+SELECT id, nombre, departamento, salario,
+       fecha_contratacion, activo, tipo_contrato
+FROM empleados;
 
+-- Mostrar las tablas que existen en la base de datos
 SHOW TABLES;
 
+-- Comprobar nuevamente la base de datos actual
 SELECT DATABASE();
+
+-- Mostrar los empleados registrados
+SELECT * FROM empleados;

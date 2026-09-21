@@ -9,6 +9,7 @@ public class EmpleadoService {
     public void validarEmpleado(Empleado empleado) {
 
         // Validar nombre
+
         if (empleado.getNombre() == null ||
                 empleado.getNombre().trim().isEmpty()) {
 
@@ -18,6 +19,7 @@ public class EmpleadoService {
         }
 
         // Validar departamento
+
         if (empleado.getDepartamento() == null ||
                 empleado.getDepartamento().trim().isEmpty()) {
 
@@ -27,6 +29,7 @@ public class EmpleadoService {
         }
 
         // Validar salario
+
         if (empleado.getSalario() <= 0) {
 
             throw new IllegalArgumentException(
@@ -35,6 +38,7 @@ public class EmpleadoService {
         }
 
         // Validar fecha
+
         if (empleado.getFechaContratacion() == null) {
 
             throw new IllegalArgumentException(
@@ -43,11 +47,22 @@ public class EmpleadoService {
         }
 
         // La fecha no puede ser futura
+
         if (empleado.getFechaContratacion()
                 .isAfter(LocalDate.now())) {
 
             throw new IllegalArgumentException(
                     "La fecha de contratación no puede ser futura."
+            );
+        }
+
+        // Validar tipo de contrato
+
+        if (empleado.getTipoContrato() == null ||
+                empleado.getTipoContrato().trim().isEmpty()) {
+
+            throw new IllegalArgumentException(
+                    "Debe seleccionar un tipo de contrato."
             );
         }
     }

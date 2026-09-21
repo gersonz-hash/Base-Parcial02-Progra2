@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,7 +19,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JComboBox;
 
 import umg.edu.gt.gestionempleados.dao.EmpleadoDao;
 import umg.edu.gt.gestionempleados.modelo.Empleado;
@@ -31,7 +31,8 @@ public class VentanaEmpleados extends JFrame {
     private JTextField txtDepartamento;
     private JTextField txtSalario;
     private JTextField txtFecha;
-    private JComboBox<String> comboOperacion; 
+
+    private JComboBox<String> comboTipoContrato;
 
     private JCheckBox chkActivo;
 
@@ -54,21 +55,21 @@ public class VentanaEmpleados extends JFrame {
     public VentanaEmpleados() {
 
         setTitle("Gestión de Empleados");
-        setSize(900, 600);
+
+        setSize(1000, 650);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setLocationRelativeTo(null);
 
         empleadoDao = new EmpleadoDao();
+
         empleadoService = new EmpleadoService();
 
         crearInterfaz();
+
         cargarTabla();
     }
-    
-    
-   // public ComboBox {
-    	
-   // }
 
     private void crearInterfaz() {
 
@@ -78,16 +79,21 @@ public class VentanaEmpleados extends JFrame {
                 new GridBagLayout()
         );
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        GridBagConstraints gbc =
+                new GridBagConstraints();
 
         gbc.insets = new Insets(5, 5, 5, 5);
+
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // ID
 
         gbc.gridx = 0;
         gbc.gridy = 0;
 
         panelFormulario.add(
-                new JLabel("ID:"), gbc
+                new JLabel("ID:"),
+                gbc
         );
 
         txtId = new JTextField(10);
@@ -95,14 +101,18 @@ public class VentanaEmpleados extends JFrame {
         gbc.gridx = 1;
 
         panelFormulario.add(
-                txtId, gbc
+                txtId,
+                gbc
         );
+
+        // NOMBRE
 
         gbc.gridx = 0;
         gbc.gridy = 1;
 
         panelFormulario.add(
-                new JLabel("Nombre completo:"), gbc
+                new JLabel("Nombre completo:"),
+                gbc
         );
 
         txtNombre = new JTextField(25);
@@ -110,14 +120,18 @@ public class VentanaEmpleados extends JFrame {
         gbc.gridx = 1;
 
         panelFormulario.add(
-                txtNombre, gbc
+                txtNombre,
+                gbc
         );
+
+        // DEPARTAMENTO
 
         gbc.gridx = 0;
         gbc.gridy = 2;
 
         panelFormulario.add(
-                new JLabel("Departamento:"), gbc
+                new JLabel("Departamento:"),
+                gbc
         );
 
         txtDepartamento = new JTextField(25);
@@ -125,14 +139,18 @@ public class VentanaEmpleados extends JFrame {
         gbc.gridx = 1;
 
         panelFormulario.add(
-                txtDepartamento, gbc
+                txtDepartamento,
+                gbc
         );
+
+        // SALARIO
 
         gbc.gridx = 0;
         gbc.gridy = 3;
 
         panelFormulario.add(
-                new JLabel("Salario mensual:"), gbc
+                new JLabel("Salario mensual:"),
+                gbc
         );
 
         txtSalario = new JTextField(15);
@@ -140,14 +158,18 @@ public class VentanaEmpleados extends JFrame {
         gbc.gridx = 1;
 
         panelFormulario.add(
-                txtSalario, gbc
+                txtSalario,
+                gbc
         );
+
+        // FECHA
 
         gbc.gridx = 0;
         gbc.gridy = 4;
 
         panelFormulario.add(
-                new JLabel("Fecha contratación:"), gbc
+                new JLabel("Fecha contratación:"),
+                gbc
         );
 
         txtFecha = new JTextField(15);
@@ -155,44 +177,90 @@ public class VentanaEmpleados extends JFrame {
         gbc.gridx = 1;
 
         panelFormulario.add(
-                txtFecha, gbc
+                txtFecha,
+                gbc
         );
 
-        chkActivo = new JCheckBox("Empleado activo");
+        // ACTIVO
+
+        chkActivo = new JCheckBox(
+                "Empleado activo"
+        );
+
         chkActivo.setSelected(true);
 
         gbc.gridx = 1;
         gbc.gridy = 5;
 
         panelFormulario.add(
-                chkActivo, gbc
+                chkActivo,
+                gbc
         );
+
+        // TIPO DE CONTRATO
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+
+        panelFormulario.add(
+                new JLabel("Tipo de contrato:"),
+                gbc
+        );
+
+        comboTipoContrato = new JComboBox<>(
+                new String[]{
+                        "Temporal",
+                        "Permanente",
+                        "Por ahora"
+                }
+        );
+
+        gbc.gridx = 1;
+
+        panelFormulario.add(
+                comboTipoContrato,
+                gbc
+        );
+
+        // BOTONES
 
         JPanel panelBotones = new JPanel();
 
         btnGuardar = new JButton("Guardar");
+
         btnBuscar = new JButton("Buscar");
+
         btnActualizar = new JButton("Actualizar");
+
         btnTotal = new JButton("Ver Totales");
+
         btnEliminar = new JButton("Eliminar");
+
         btnLimpiar = new JButton("Limpiar");
-        
 
         panelBotones.add(btnGuardar);
+
         panelBotones.add(btnBuscar);
+
         panelBotones.add(btnActualizar);
+
         panelBotones.add(btnTotal);
+
         panelBotones.add(btnEliminar);
+
         panelBotones.add(btnLimpiar);
-        
 
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
+
         gbc.gridwidth = 2;
 
         panelFormulario.add(
-                panelBotones, gbc
+                panelBotones,
+                gbc
         );
+
+        // TABLA
 
         modeloTabla = new DefaultTableModel(
                 new Object[]{
@@ -201,8 +269,10 @@ public class VentanaEmpleados extends JFrame {
                         "Departamento",
                         "Salario",
                         "Fecha contratación",
-                        "Estado"
-                }, 0
+                        "Estado",
+                        "Tipo contrato"
+                },
+                0
         ) {
 
             @Override
@@ -210,11 +280,13 @@ public class VentanaEmpleados extends JFrame {
                     int row,
                     int column
             ) {
+
                 return false;
             }
         };
 
-        tablaEmpleados = new JTable(modeloTabla);
+        tablaEmpleados =
+                new JTable(modeloTabla);
 
         tablaEmpleados.setSelectionMode(
                 ListSelectionModel.SINGLE_SELECTION
@@ -223,8 +295,17 @@ public class VentanaEmpleados extends JFrame {
         JScrollPane scrollTabla =
                 new JScrollPane(tablaEmpleados);
 
-        add(panelFormulario, BorderLayout.NORTH);
-        add(scrollTabla, BorderLayout.CENTER);
+        add(
+                panelFormulario,
+                BorderLayout.NORTH
+        );
+
+        add(
+                scrollTabla,
+                BorderLayout.CENTER
+        );
+
+        // EVENTOS
 
         btnGuardar.addActionListener(
                 e -> guardarEmpleado()
@@ -237,11 +318,10 @@ public class VentanaEmpleados extends JFrame {
         btnActualizar.addActionListener(
                 e -> actualizarEmpleado()
         );
-        
+
         btnTotal.addActionListener(
                 e -> calcularTotal()
         );
-        
 
         btnEliminar.addActionListener(
                 e -> eliminarEmpleado()
@@ -255,6 +335,7 @@ public class VentanaEmpleados extends JFrame {
                 .addListSelectionListener(e -> {
 
                     if (!e.getValueIsAdjusting()) {
+
                         cargarEmpleadoSeleccionado();
                     }
                 });
@@ -284,20 +365,28 @@ public class VentanaEmpleados extends JFrame {
             boolean activo =
                     chkActivo.isSelected();
 
+            String tipoContrato =
+                    comboTipoContrato
+                            .getSelectedItem()
+                            .toString();
+
             Empleado empleado =
                     new Empleado(
                             nombre,
                             departamento,
                             salario,
                             fecha,
-                            activo
+                            activo,
+                            tipoContrato
                     );
 
             empleadoService.validarEmpleado(
                     empleado
             );
 
-            empleadoDao.guardar(empleado);
+            empleadoDao.guardar(
+                    empleado
+            );
 
             JOptionPane.showMessageDialog(
                     this,
@@ -305,6 +394,7 @@ public class VentanaEmpleados extends JFrame {
             );
 
             limpiarCampos();
+
             cargarTabla();
 
         } catch (NumberFormatException e) {
@@ -314,7 +404,8 @@ public class VentanaEmpleados extends JFrame {
                     "El salario debe ser un número válido."
             );
 
-        } catch (java.time.format.DateTimeParseException e) {
+        } catch (
+                java.time.format.DateTimeParseException e) {
 
             JOptionPane.showMessageDialog(
                     this,
@@ -361,7 +452,9 @@ public class VentanaEmpleados extends JFrame {
                 return;
             }
 
-            cargarDatosEmpleado(empleado);
+            cargarDatosEmpleado(
+                    empleado
+            );
 
         } catch (NumberFormatException e) {
 
@@ -409,6 +502,11 @@ public class VentanaEmpleados extends JFrame {
             boolean activo =
                     chkActivo.isSelected();
 
+            String tipoContrato =
+                    comboTipoContrato
+                            .getSelectedItem()
+                            .toString();
+
             Empleado empleado =
                     new Empleado(
                             id,
@@ -416,7 +514,8 @@ public class VentanaEmpleados extends JFrame {
                             departamento,
                             salario,
                             fecha,
-                            activo
+                            activo,
+                            tipoContrato
                     );
 
             empleadoService.validarEmpleado(
@@ -436,7 +535,9 @@ public class VentanaEmpleados extends JFrame {
                 return;
             }
 
-            empleadoDao.actualizar(empleado);
+            empleadoDao.actualizar(
+                    empleado
+            );
 
             JOptionPane.showMessageDialog(
                     this,
@@ -444,6 +545,7 @@ public class VentanaEmpleados extends JFrame {
             );
 
             limpiarCampos();
+
             cargarTabla();
 
         } catch (NumberFormatException e) {
@@ -453,7 +555,8 @@ public class VentanaEmpleados extends JFrame {
                     "El ID y el salario deben ser números válidos."
             );
 
-        } catch (java.time.format.DateTimeParseException e) {
+        } catch (
+                java.time.format.DateTimeParseException e) {
 
             JOptionPane.showMessageDialog(
                     this,
@@ -477,25 +580,23 @@ public class VentanaEmpleados extends JFrame {
             );
         }
     }
-    
- // Implementar funcionalidad de boton para calcular la suma y promedio
+
     private void calcularTotal() {
 
         try {
-        	
-            //declaro variables 
-            double suma = 0;
-            int cantidad = 0;
-            
-            //utilizo un for-ech para recorrer los elementos que tengo en la lista
-            for (Empleado empleado : empleadoDao.listar()) {
-            	
-                suma += empleado.getSalario();
-                cantidad++;
 
+            double suma = 0;
+
+            int cantidad = 0;
+
+            for (Empleado empleado :
+                    empleadoDao.listar()) {
+
+                suma += empleado.getSalario();
+
+                cantidad++;
             }
-            
-            //si la cantidad es diferente de 0 devuelve lo que está en la instuccion
+
             if (cantidad == 0) {
 
                 JOptionPane.showMessageDialog(
@@ -505,16 +606,15 @@ public class VentanaEmpleados extends JFrame {
 
                 return;
             }
-            
-            //para sacar el promedio divido la suma con cantidad
-            double promedio = suma / cantidad;
+
+            double promedio =
+                    suma / cantidad;
 
             JOptionPane.showMessageDialog(
                     this,
                     String.format(
-                    		
-                    		//le agregamos formato a la salida que queremos 
-                            "Total de salarios: Q%.2f\nPromedio de salarios: Q%.2f",
+                            "Total de salarios: Q%.2f\n"
+                            + "Promedio de salarios: Q%.2f",
                             suma,
                             promedio
                     ),
@@ -529,7 +629,6 @@ public class VentanaEmpleados extends JFrame {
                     "Error al calcular los totales:\n"
                     + e.getMessage()
             );
-
         }
     }
 
@@ -575,6 +674,7 @@ public class VentanaEmpleados extends JFrame {
                 );
 
                 limpiarCampos();
+
                 cargarTabla();
             }
 
@@ -607,18 +707,25 @@ public class VentanaEmpleados extends JFrame {
                 modeloTabla.addRow(
                         new Object[]{
                                 empleado.getId(),
+
                                 empleado.getNombre(),
+
                                 empleado.getDepartamento(),
+
                                 String.format(
                                         "Q%.2f",
                                         empleado.getSalario()
                                 ),
+
                                 empleado
                                         .getFechaContratacion()
                                         .format(formato),
+
                                 empleado.isActivo()
                                         ? "Activo"
-                                        : "Inactivo"
+                                        : "Inactivo",
+
+                                empleado.getTipoContrato()
                         }
                 );
             }
@@ -639,6 +746,7 @@ public class VentanaEmpleados extends JFrame {
                 tablaEmpleados.getSelectedRow();
 
         if (fila == -1) {
+
             return;
         }
 
@@ -653,7 +761,9 @@ public class VentanaEmpleados extends JFrame {
 
         if (empleado != null) {
 
-            cargarDatosEmpleado(empleado);
+            cargarDatosEmpleado(
+                    empleado
+            );
         }
     }
 
@@ -689,17 +799,27 @@ public class VentanaEmpleados extends JFrame {
         chkActivo.setSelected(
                 empleado.isActivo()
         );
+
+        comboTipoContrato.setSelectedItem(
+                empleado.getTipoContrato()
+        );
     }
 
     private void limpiarCampos() {
 
         txtId.setText("");
+
         txtNombre.setText("");
+
         txtDepartamento.setText("");
+
         txtSalario.setText("");
+
         txtFecha.setText("");
 
         chkActivo.setSelected(true);
+
+        comboTipoContrato.setSelectedIndex(0);
 
         tablaEmpleados.clearSelection();
 
